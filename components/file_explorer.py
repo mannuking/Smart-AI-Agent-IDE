@@ -51,7 +51,7 @@ class FileExplorer:
                         "depth": depth
                     })
         return file_tree
-
+ 
     def display_file_tree(self):
         """Display the file tree without nested expanders"""
         # Get all directories for folder navigation
