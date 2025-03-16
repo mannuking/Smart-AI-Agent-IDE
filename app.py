@@ -141,7 +141,7 @@ def main():
     dir_path = st.sidebar.text_input("Directory Path:", value=default_dir)
     if st.sidebar.button("Browse"):
         st.session_state.explorer_dir = dir_path
-        st.experimental_rerun()
+        st.rerun()
     
     # File explorer in sidebar
     if os.path.isdir(dir_path):
@@ -232,7 +232,7 @@ def main():
                     with st.spinner("Initializing task..."):
                         # Run agent with constraints
                         st.session_state.agent.run(task_description, constraints if constraints else None)
-                    st.experimental_rerun()
+                    st.rerun()
             # Display task tree with improved graph view
             else:
                 # Add view toggle
@@ -269,7 +269,7 @@ def main():
                             if node.status == STATUS_PENDING:
                                 if st.button("Execute Node", key=f"exec_{node.node_id}"):
                                     st.session_state.agent.agentFlow("execute", node)
-                                    st.experimental_rerun()
+                                    st.rerun()
                             
                             # Show output if available
                             if node.output:
@@ -285,7 +285,7 @@ def main():
                                             # Set active file in editor
                                             st.session_state.active_file = filepath
                                             st.session_state.file_content = content
-                                            st.experimental_rerun()
+                                            st.rerun()
                 else:  # Task Tree view
                     # Hierarchical tree display
                     st.subheader("Task Hierarchy")
@@ -320,7 +320,7 @@ def main():
                             if st.button("Select", key=f"select_{node_id}"):
                                 st.session_state.selected_node_id = node_id
                                 st.session_state.agent.agentFlow("select", node)
-                                st.experimental_rerun()
+                                st.rerun()
                         
                         # Node children (recursively)
                         for child_id in node.child_ids:
@@ -362,7 +362,7 @@ def main():
                                         execution_result = st.container()
                                         with execution_result:
                                             st.session_state.agent.agentFlow("execute", node)
-                                    st.experimental_rerun()
+                                    st.rerun()
                         
                         with action_cols[1]:
                             # Regenerate with guidance in a more compact way
@@ -375,7 +375,7 @@ def main():
                                     if st.button("Regenerate", key=f"regenerate_detail_{node.node_id}"):
                                         with st.spinner("Regenerating..."):
                                             st.session_state.agent.agentFlow("regenerate", node, regeneration_guidance)
-                                        st.experimental_rerun()
+                                        st.rerun()
                         
                         with action_cols[2]:
                             # Delete button
@@ -383,7 +383,7 @@ def main():
                                 st.session_state.agent.agentFlow("delete", node)
                                 if node.node_id == st.session_state.selected_node_id:
                                     st.session_state.selected_node_id = None
-                                st.experimental_rerun()
+                                st.rerun()
                         
                         # Show output using tabs instead of expanders
                         if node.output:
@@ -449,7 +449,7 @@ def main():
                                             if st.button("Open in Editor", key=editor_key):
                                                 st.session_state.active_file = selected_file
                                                 st.session_state.file_content = content
-                                                st.experimental_rerun()
+                                                st.rerun()
                         
                         # Add child node option in a more compact layout
                         if node.status == STATUS_COMPLETED:
@@ -464,7 +464,7 @@ def main():
                                                 node.depth + 1
                                             )
                                             st.session_state.selected_node_id = child_node.node_id
-                                        st.experimental_rerun()
+                                        st.rerun()
                                     else:
                                         st.error("Please enter a task description.")
                 
@@ -476,7 +476,7 @@ def main():
                     if st.button("New Task", key="new_task_btn"):
                         st.session_state.agent.reset_agent()
                         st.session_state.selected_node_id = None
-                        st.experimental_rerun()
+                        st.rerun()
                 
                 with col2:
                     if 'show_save_load' not in st.session_state:
@@ -484,7 +484,7 @@ def main():
                         
                     if st.button("Save/Load Session", key="save_load_toggle"):
                         st.session_state.show_save_load = not st.session_state.show_save_load
-                        st.experimental_rerun()
+                        st.rerun()
                 
                 # Show save/load controls if toggled
                 if st.session_state.get('show_save_load', False):
@@ -501,7 +501,7 @@ def main():
                         if st.button("Load") and os.path.exists(load_filename):
                             st.session_state.agent.load_session(load_filename)
                             st.success(f"Session loaded from {load_filename}")
-                            st.experimental_rerun()
+                            st.rerun()
                         elif st.button("Load") and not os.path.exists(load_filename):
                             st.error(f"File not found: {load_filename}")
             
@@ -577,7 +577,7 @@ def main():
         with col2:
             if st.button("▼", help="Collapse Terminal"):
                 st.session_state.show_terminal = False
-                st.experimental_rerun()
+                st.rerun()
         
         # Initialize terminal if not already done
         if 'terminal' not in st.session_state:
@@ -599,7 +599,7 @@ def main():
         ''', unsafe_allow_html=True)
         if st.button("▲ Show Terminal", key="show_terminal_btn", help="Expand Terminal"):
             st.session_state.show_terminal = True
-            st.experimental_rerun()
+            st.rerun()
     
     # Settings in sidebar
     with st.sidebar.expander("⚙️ Settings"):
@@ -641,7 +641,7 @@ def main():
         terminal_height = st.slider("Terminal Height", 100, 600, st.session_state.terminal_height, 50)
         if terminal_height != st.session_state.terminal_height:
             st.session_state.terminal_height = terminal_height
-            st.experimental_rerun()
+            st.rerun()
             
         # Agent configuration
         st.subheader("Agent Configuration")

@@ -276,14 +276,14 @@ class ClineInterface:
         with control_col1:
             if st.button("Clear", key="clear_terminal"):
                 st.session_state.terminal_history = []
-                st.experimental_rerun()
+                st.rerun()
         
         with control_col2:
             if st.button("Sync Dir", key="sync_dir", help="Sync terminal with file explorer directory"):
                 if 'explorer_dir' in st.session_state:
                     self.terminal.set_working_directory(st.session_state.explorer_dir)
                     st.success(f"Terminal directory synced to: {st.session_state.explorer_dir}")
-                    st.experimental_rerun()
+                    st.rerun()
         
         # Display history in reverse chronological order (newest at top like VS Code)
         if "terminal_history" in st.session_state and st.session_state.terminal_history:
