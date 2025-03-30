@@ -1,0 +1,17 @@
+# Core dependencies for Visual AI Automation Builder
+streamlit>=1.31.0
+streamlit-agraph>=0.0.7
+
+# LLM integration
+langchain-openai>=0.0.5
+langchain-core>=0.1.14
+
+# Graph processing
+langgraph>=0.0.36
+
+# Utilities
+typing-extensions>=4.8.0
+regex>=2023.10.3
+
+# For proper LLM tool binding
+langchain>=0.1.0
