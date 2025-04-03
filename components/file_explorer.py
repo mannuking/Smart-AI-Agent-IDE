@@ -51,7 +51,7 @@ class FileExplorer:
                         "depth": depth
                     })
         return file_tree
-
+ 
     def display_file_tree(self):
         """Display the file tree without nested expanders"""
         # Get all directories for folder navigation
@@ -69,7 +69,7 @@ class FileExplorer:
         parent_dir = os.path.dirname(self.root_path)
         if st.button("⬆️ Up to Parent Directory"):
             st.session_state.explorer_dir = parent_dir
-            st.experimental_rerun()
+            st.rerun()
 
         # --- New File/Folder Creation ---
         col1, col2 = st.columns(2)
@@ -105,7 +105,7 @@ class FileExplorer:
                                     f.write("")  # Create an empty file
                                 st.success(f"File created: {new_file_name}")
                                 st.session_state.show_new_file_form = False
-                                st.experimental_rerun()
+                                st.rerun()
                             except Exception as e:
                                 st.error(f"Error creating file: {str(e)}")
                         else:
@@ -113,7 +113,7 @@ class FileExplorer:
                 with col2:
                     if st.form_submit_button("Cancel"):
                         st.session_state.show_new_file_form = False
-                        st.experimental_rerun()
+                        st.rerun()
 
         # New Folder Form
         if st.session_state.get('show_new_folder_form'):
@@ -128,7 +128,7 @@ class FileExplorer:
                                 os.makedirs(new_folder_path, exist_ok=True)
                                 st.success(f"Folder created: {new_folder_name}")
                                 st.session_state.show_new_folder_form = False
-                                st.experimental_rerun()
+                                st.rerun()
                             except Exception as e:
                                 st.error(f"Error creating folder: {str(e)}")
                         else:
@@ -136,7 +136,7 @@ class FileExplorer:
                 with col2:
                     if st.form_submit_button("Cancel"):
                         st.session_state.show_new_folder_form = False
-                        st.experimental_rerun()
+                        st.rerun()
 
         # List directories first
         st.write("**Folders:**")
@@ -153,7 +153,7 @@ class FileExplorer:
                         dir_path = os.path.join(root, dir_name)
                         if st.button(f"📁 {dir_name}", key=f"dir_{dir_path}"):
                             st.session_state.explorer_dir = dir_path
-                            st.experimental_rerun()
+                            st.rerun()
             break  # Only process the top level
 
         # List files
